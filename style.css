@@ -3,3 +3,55 @@ width:100%;
 font-size:300%;
 text-align:center;
 }
+
+/*user names form*/
+#userNamesForm form label{
+display:inline-block;
+width:100px;
+}
+#userNamesForm form div{
+margin:5px 0;
+}
+#userNamesForm form input{
+width: 190px;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:last-child{
+background-color:#369;
+color:#FFF;
+font-weight:bold;
+}
+
+/*players list display*/
+ul#playersList{
+list-style: none;
+}
+
+ul#playersList li{
+display:block;
+clear: both;
+padding:10px 0;
+}
+
+.playerName{
+width:300px;
+font-size:150%;
+float:left;
+}
+
+/*score display*/
+.improScore{
+margin-right:10px;
+float:left;
+}
+.point,.noPoint{
+border:1px #000 solid;
+width:20px;
+height:20px;
+float:left;
+margin:3px;
+border-radius:10px;
+cursor:pointer;
+}
+.point{
+background-color:#000;
+}
