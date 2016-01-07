@@ -1,2 +1,0 @@
-# scorekeeper
-Improvisation score keeper
