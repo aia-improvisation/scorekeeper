@@ -4,15 +4,54 @@ font-size:300%;
 text-align:center;
 }
 
+/*functions list*/
+#functionsListWrapper{
+position:absolute;
+cursor:pointer;
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+width:30px;
+height:30px;
+}
+#functionsList{
+display:none;
+position:absolute;
+left:40px;
+background-color:#FFF;
+border:1px #369 solid;
+padding:10px;
+border-radius:5px;
+}
+#functionsList button{
+cursor:pointer;
+display:block;
+width:200px;
+height:30px;
+margin:5px;
+border-radius:5px;
+background-color:#FFF;
+border:1px #ccc solid;
+font-size:120%;
+}
+#functionsList button:hover{
+background-color: #e6e6e6;
+border-color: #adadad;
+}
+
+#functionsList button.btn-danger{
+color: #fff;
+background-color: #d9534f;
+border-color: #d43f3a;	
+}
+
 /*user names form*/
-#userNamesForm form label{
+#form_userNames form label{
 display:inline-block;
 width:100px;
 }
-#userNamesForm form div{
+#form_userNames form div{
 margin:5px 0;
 }
-#userNamesForm form input{
+#form_userNames form input{
 width: 190px;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:last-child{
@@ -55,3 +94,33 @@ cursor:pointer;
 .point{
 background-color:#000;
 }
+
+/* player statuses display */
+.notPlaying{
+color:#AAA;
+}
+.notPlaying .point,.notPlaying .noPoint{
+border-color:#AAA;
+}
+.notPlaying .point{
+background-color:#AAA;
+}
+
+.eliminated{
+color:#DDD;
+}
+.eliminated .point,.eliminated .noPoint{
+border-color:#DDD;
+}
+.eliminated .point{
+background-color:#DDD;
+}
+
+
+
+/* scoreAttribution */
+#form_scoreAttribution .improScore{
+margin: 20px 80px;
+}
+
+
