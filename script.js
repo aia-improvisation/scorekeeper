@@ -1,11 +1,4 @@
-//Public variables
-var minPlayer = 1;
-var maxPlayer = 14;
-
-//max number of points an impro can receive
-var maxScorePerPlay = 5;
-
-//private variables
+"use strict";
 
 //players Data
 var playersData = {};
@@ -21,7 +14,7 @@ var playersDataStatusList = ['playing','notPlaying','active','eliminated'];
 //Round number
 var roundNum = 1;
 
-//current phase
+// current phase
 var currentPhase = 'wait';
 /*currentPhaseList:
  *wait : between each impro
@@ -29,34 +22,44 @@ var currentPhase = 'wait';
  */
 var currentPhaseList = ['wait','playing'];
 
+// safe mode
+/* safeMode = true : we follow the game flow */
+/* safeMode = false : we can modify anything, in order to fix mistakes */
+var safeMode = true;
+var safeComponents = [];
+
 //number of points selected
 var selectedPoints = 1;
 
 
-//We use local storage to survive page reload
-var retrievedObject = JSON.parse(localStorage.getItem('playersData'));
-if(retrievedObject) playersData = retrievedObject;
 
 $(() => {
+  ///////////////////////////////////////
+  //some common functionalities used throughout the app
+  ///////////////////////////////////////
+  
+  Player.restore();
+
+  $(".playerNum.header").click(() => Player.refresh(numOrder, true));
+  $(".playerName.header").click(() => Player.refresh(nameOrder, true));
+  $(".playerScore.header").click(() => Player.refresh(scoreOrder, true));
+
+  $(".nextRound").click(() => Player.round = Player.nextRound());
+
+  //the functions on the left
+  $('#functionsListWrapper').click(() => {
+    $('#functionsList').toggle();
     
-    ///////////////////////////////////////
-    //some common functionalities used throughout the app
-    ///////////////////////////////////////
-
-    //the functions on the left
-    $('#functionsListWrapper').click(() => {
-	$('#functionsList').toggle();
-
-	if(currentPhase == 'wait') {
-	    $('#btn_selectPlayers').show();
-	    $('#btn_attributeScore').hide();
-	    $('#btn_eliminatePlayers').show();
-	} else if(currentPhase == 'playing') {
-	    $('#btn_selectPlayers').hide();
-	    $('#btn_attributeScore').show();
-	    $('#btn_eliminatePlayers').hide();
-	}
-    })
+  if(currentPhase == 'wait') {
+    $('#btn_selectPlayers').show();
+    $('#btn_attributeScore').hide();
+    $('#btn_eliminatePlayers').show();
+  } else if(currentPhase == 'playing') {
+    $('#btn_selectPlayers').hide();
+    $('#btn_attributeScore').show();
+    $('#btn_eliminatePlayers').hide();
+  }
+})
 
     //increment round num
     function incrementRoundNum() {
@@ -65,18 +68,18 @@ $(() => {
     }
 
     //the main function responsible for drawing the players list
-    function drawPlayersList() {
+    function drawplayerList() {
     	//console.log('drawing');
 
     	//we empty the display
-    	$('#playersList').html('');
+    	$('#playerList').html('');
     	//We loop the diferent status in the order of display
     	for(statusNum in playersDataStatusList) {
     	    var status = playersDataStatusList[statusNum];
 
     	    //We loop the list of users
     	    for(var num in playersData) {
-    		
+
     		var playerData = playersData[num];
 
 
@@ -103,7 +106,7 @@ $(() => {
     	localStorage.setItem('playersData', JSON.stringify(playersData));
     }
 
-    $(document).on('click','#playersList .pointIcon',function(){
+    $(document).on('click','#playerList .pointIcon',function(){
     	var playerId = $(this).closest('.playerLine').attr('playerid');
     	var score = $(this).attr('pointnum');
     	var round = $(this).closest('.improScore').attr('roundnum');
@@ -111,7 +114,7 @@ $(() => {
     	//console.log(playerId+' - '+score + ' - '+round);
 
     	playersData[playerId].scores[round] = parseInt(score);
-    	drawPlayersList();
+    	drawplayerList();
     })
 
 
@@ -138,7 +141,7 @@ $(() => {
     });
 
     if(playersData.length ==0) dialog_userNames.dialog( "open" );
-    else drawPlayersList();
+    else drawplayerList();
 
 
     function startGame() {
@@ -161,14 +164,14 @@ $(() => {
     		return;
     	    }
     	//We draw the players list
-    	drawPlayersList();
+    	drawplayerList();
 
     	//it's ok, we can close the discussion
     	dialog_userNames.dialog( "close" );
     }
 
 
-    
+
 
 
 
@@ -201,7 +204,7 @@ $(() => {
 	$('#form_userSelection form').html('');
 	//We loop the list of users
 	for(var num in playersData) {
-	    
+
 	    var playerData = playersData[num];
 
 	    //only active players can play
@@ -216,7 +219,7 @@ $(() => {
 
 
     function savePlayersSelection() {
-    	
+
     	//We loop on the checkbox and save the playing ones
     	var atLeastOneSelected = false;
     	$( "#form_userSelection input" ).each(function(){
@@ -233,7 +236,7 @@ $(() => {
     		return;
     	    }
     	//We draw the players list
-    	drawPlayersList();
+    	drawplayerList();
     	//it's ok, we can close the discussion and update the status
     	dialog_selectPlayers.dialog( "close" );
     	$('#functionsListWrapper').trigger('click');
@@ -291,14 +294,14 @@ $(() => {
     })
 
     function saveScore() {
-    	
+
     	if(selectedPoints == 0) {
     	    alert('You must select at least one point');
     	    return;
     	}
     	//We loop the list of users
 	for(var num in playersData) {
-	    
+
 	    var playerData = playersData[num];
 
 	    //only active players can play
@@ -307,11 +310,11 @@ $(() => {
 		playersData[num].status = 'active';
 	    }
 	    if(playerData.status == 'notPlaying') playersData[num].status = 'active';
-	    
+
 	} //end foreach player
 
     	//We draw the players list
-    	drawPlayersList();
+    	drawplayerList();
     	//it's ok, we can close the discussion and update the status
     	dialog_attributeScore.dialog( "close" );
     	$('#functionsListWrapper').trigger('click');
@@ -348,7 +351,7 @@ $(() => {
 	$('#form_userElimination form').html('');
 	//We loop the list of users
 	for(var num in playersData) {
-	    
+
 	    var playerData = playersData[num];
 
 	    //only active players can play
@@ -363,7 +366,7 @@ $(() => {
 
 
     function savePlayersEliminated() {
-    	
+
     	//We loop on the checkbox and save the playing ones
     	$( "#form_userElimination input" ).each(function(){
     	    var isEliminated = $(this).prop('checked');
@@ -374,19 +377,19 @@ $(() => {
     	})
 
     	    //We draw the players list
-    	    drawPlayersList();
+    	    drawplayerList();
     	//it's ok, we can close the discussion and update the status
     	dialog_userElimination.dialog( "close" );
     	$('#functionsListWrapper').trigger('click');
     	currentPhase = 'wait';
     }
-    
+
     ///////////////////////////////////////
     //fifth step, start new game
     ///////////////////////////////////////
 
     $('#btn_newGame').on('click',function() {
-	playersData = {};
+        Player.reset();
 	currentPhase = 'wait';
 	roundNum = 1;
 	dialog_userNames.dialog( "open" );

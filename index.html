@@ -9,19 +9,20 @@
   <!-- jquery -->
   <script src="jquery.min.js"></script>
 
-  <!-- local script -->
-  <script src="script.js"></script>
-
   <!-- jquery UI -->
   <link rel="stylesheet" href="jquery-ui.css">
   <script src="jquery-ui.min.js"></script>
 
+  <!-- local scripts -->
+  <script src="maestroAPI.js"></script>
+  <script src="minimalInterface.js"></script>
 
 </head>
 <body>
 
 <div id="functionsListWrapper"></div>
 <div id="functionsList">
+	<button id="btn_edit" class="unsafe">Edit</button>
 	<button id="btn_selectPlayers">Select Players</button>
 	<button id="btn_attributeScore">Attribute score</button>
 	<button id="btn_eliminatePlayers">Eliminate Players</button>
@@ -31,36 +32,21 @@
 
 
 <div id="title">
-Maestro Impro™, Round n°<span class="roundNumber">1</span>
+  Maestro Impro™, Round n°<span class="roundNumber">1</span>
+  <div class="nextRound">Next Round</div>
 </div>
 
+<div id="timer">
+</div>
 
-
-<ul id="playersList">
+<ul id="playerList">
+  <li>
+    <div class="playerStatus header"></div>
+    <div class="playerNum header">N°</div>
+    <div class="playerName header">Name</div>
+    <div class="playerScore header">Score</div>
+  </li>
 </ul>
-
-
-<div id="form_userNames" title="Please enter player names">
-	<form>
-	</form>
-</div>
-
-
-<div id="form_userSelection" title="Please select players">
-	<form>
-	</form>
-</div>
-
-<div id="form_scoreAttribution" title="Please attribute score">
-	<form>
-	</form>
-</div>
-
-
-<div id="form_userElimination" title="Please select users to eliminate">
-	<form>
-	</form>
-</div>
 
 </body>
 </html>

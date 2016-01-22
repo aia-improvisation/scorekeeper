@@ -1,8 +1,19 @@
+body {
+cursor: default;
+}
+
 #title{
 width:100%;
 font-size:300%;
 text-align:center;
 }
+
+#title .nextRound{
+font-size: 50%;
+display: inline;
+cursor: pointer;
+}
+
 
 /*functions list*/
 #functionsListWrapper{
@@ -40,7 +51,7 @@ border-color: #adadad;
 #functionsList button.btn-danger{
 color: #fff;
 background-color: #d9534f;
-border-color: #d43f3a;	
+border-color: #d43f3a;
 }
 
 /*user names form*/
@@ -61,66 +72,129 @@ font-weight:bold;
 }
 
 /*players list display*/
-ul#playersList{
+ul#playerList{
 list-style: none;
 }
 
-ul#playersList li{
-display:block;
+ul#playerList li {
 clear: both;
-padding:10px 0;
+margin-bottom:10px;
+/* height:30px; */
+}
+
+.playerNum{
+width:40px;
+margin-right:20px;
+font-size:150%;
+min-height: 0.9em;
+display: inline-block;
+/* float:left; */
 }
 
 .playerName{
-width:300px;
+width:180px;
 font-size:150%;
-float:left;
+margin-right:20px;
+min-height: 0.9em;
+display: inline-block;
+/* float:left; */
 }
 
 /*score display*/
-.improScore{
+.playerScore{
 margin-right:10px;
-float:left;
+font-size:150%;
+display: inline-block;
+/* float:left; */
 }
-.point,.noPoint{
+
+.scoreBlock{
+display: inline-block
+}
+
+.scoreBlock.complete{
+border:1px #000 solid;
+}
+
+input{
+cursor: auto;
+}
+
+.header{
+cursor: pointer;
+font-weight: bold;
+}
+
+div.point{
 border:1px #000 solid;
 width:20px;
 height:20px;
-float:left;
-margin:3px;
+/* float:left; */
+margin-left:3px;
+margin-right:3px;
+/* margin-top: -1px; */
+margin-bottom: -5px;
 border-radius:10px;
 cursor:pointer;
+display: inline-block;
 }
-.point{
+
+.separator{
+display: inline;
+}
+
+div.odd{
+background-color:#FFF;
+}
+
+div.even{
 background-color:#000;
 }
 
 /* player statuses display */
-.notPlaying{
+.waiting > .playerLine:not(.selected) {
+color:#000;
+}
+
+.playerLine:not(.selected) {
 color:#AAA;
 }
-.notPlaying .point,.notPlaying .noPoint{
-border-color:#AAA;
-}
-.notPlaying .point{
-background-color:#AAA;
-}
 
-.eliminated{
+#playerList > .eliminated {
 color:#DDD;
 }
-.eliminated .point,.eliminated .noPoint{
-border-color:#DDD;
-}
-.eliminated .point{
-background-color:#DDD;
+
+.eliminated .playerScore {
+display: none;
 }
 
+.playerStatus {
+width:16px;
+margin-right:20px;
+/* font-size:150%; */
+min-height: 1em;
+display: inline-block;
+}
+
+.playerLine.selected > .playerStatus {
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><polygon points='0,0 0,16 14,8' style='fill:#008000'/></svg>");
+}
+.playerLine:not(.selected) > .playerStatus {
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'>
+<polygon points='0,0 4,0 4,16 0,16' style='fill:#d45500'/>
+<polygon points='8,0 12,0 12,16 8,16' style='fill:#d45500'/>
+</svg>");
+}
+
+/* .eliminated .point,.eliminated .noPoint{ */
+/* border-color:#DDD; */
+/* } */
+/* .eliminated .point{ */
+/* background-color:#DDD; */
+/* } */
 
 
 /* scoreAttribution */
 #form_scoreAttribution .improScore{
 margin: 20px 80px;
 }
-
-
