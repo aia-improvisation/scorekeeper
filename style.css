@@ -12,15 +12,19 @@ text-align:center;
 font-size: 80%;
 }
 
-#title .nextRound{
-font-size: 25%;
+#headFun {
+text-align: center;
+}
+
+#nextRound{
+font-size: 80%;
 height: 2em;
 display: inline-block;
 /* cursor: pointer; */
 }
 
-#title #eliminatePlayers{
-font-size: 25%;
+#eliminatePlayers{
+font-size: 80%;
 height: 2em;
 display: inline-block;
 /* cursor: pointer; */
@@ -163,8 +167,7 @@ div.point.even{
 background-color:#000;
 }
 
-/* player statuses display */
-.waiting > .playerLine:not(.selected) {
+#playerList.waiting .playerLine:not(.selected) {
 color:#000;
 }
 

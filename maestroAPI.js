@@ -122,7 +122,9 @@ class Player {
 
   set scoreList(score) {this._score = score; this.refresh();}
   get scoreList() {return this._score;}
-  score() {return this.scoreList.reduce(((m, n) => m + n),0);}
+  score() {
+    if (this.eliminated) return 0;
+    return this.scoreList.reduce(((m, n) => m + n),0);}
   scorePush(k) {this.scoreList = this._score.concat([k])}
   nextRound() {return this.scoreList.length + 1}
 
@@ -223,10 +225,10 @@ Player.data = Player.default_data();
 
 Player.HUDRefresh = () => {
   // Updating round
-  $('.roundNumber').html(Player.data.round);
-  $('.nextRound').toggle(Player.nextRound() != Player.data.round);
+  $('#roundNumber').html(Player.data.round);
+  $('#nextRound').toggle(Player.nextRound() != Player.data.round);
   // Updating global player statuses
-  $("#playerList").toggleClass("waiting", !Player.data.selected);
+  $("#playerList").toggleClass("waiting", Player.selected().length == 0);
   return Player;
 }
 
@@ -243,27 +245,30 @@ Player.selected = function () {
 
 // refresh rebuilds the whole player list, sorting them according to
 // an order
-Player.refresh = function (orderList) {
+Player.refresh = function (order) {
   //  updating players
-  var orders = {};
-  if (orderList) {
-    if (orderList instanceof Array) $.each(orderList, (i, order) => orders[order] = true);
-    else orders = orderList;
-  };
-  var lastOrders = Player.lastOrders ? Player.lastOrders : {};
-  var orderList = [];
-  for (var order in orders) {
-    if ((lastOrders[order] && orders[order] == "change"
-	&& lastOrders[order] != "rev")
-  	|| (orders[order] == "rev")) {
-      if (lastOrders[order] == "change") {orders[order] = "rev"};
-      orderList.push(revOrder(playerOrder[order]));
-    } else {
-      orderList.push(playerOrder[order]) ;
-    }
-  };
-  Player.lastOrders = orders;
-  Player.data.list.sort(lexOrder.call(this, orderList));
+  // var orders = {};
+  // if (orderList) {
+  //   if (orderList instanceof Array) $.each(orderList, (i, order) => orders[order] = true);
+  //   else orders = orderList;
+  // };
+  // var lastOrders = Player.lastOrders ? Player.lastOrders : {};
+  // var orderList = [];
+  // for (var order in orders) {
+  //   if ((lastOrders[order] && orders[order] == "change"
+  // 	&& lastOrders[order] != "rev")
+  // 	|| (orders[order] == "rev")) {
+  //     if (lastOrders[order] == "change") {orders[order] = "rev"};
+  //     orderList.push(revOrder(playerOrder[order]));
+  //   } else {
+  //     orderList.push(playerOrder[order]) ;
+  //   }
+  // };
+  // Player.lastOrders = orders;
+  if (order != undefined) { Player.data.list.sort(order) };
+  // if (orderList instanceof Array){
+  //   Player.data.list.sort(lexOrder($.map(orderList, (i, x) => playerOrder[x])));
+  // }
   $.each(Player.data.list, (i, p) => {
     p.__proto__ = Player.prototype;
     p.init().refresh();
@@ -274,20 +279,20 @@ Player.refresh = function (orderList) {
 
 // different available sorting orders
 var playerOrder = {
-  num : (y, x) => x.num < y.num,
-  name : (y, x) => x.name < y.name,
-  eliminated : (y, x) => x.eliminated < y.eliminated,
-  selected : (x, y) => x.selected < y.selected,
-  score : (x, y) => x.score() < y.score()
+  num : (y, x) => y.num - x.num,
+  name : (y, x) => (x.name < y.name) ? 1 : -1,
+  eliminated : (y, x) => (x.eliminated < y.eliminated) ? 1 : -1,
+  selected : (x, y) => (x.selected < y.selected) ? 1 : -1,
+  score : (y, x) => x.score() - y.score()
 }
 
 //composing them
 function lexOrder (l) {
-  return (y, x) => {
+  return function (x, y) {
     for (var i in l) {
-      if      (l[i](y,x)) return true;
-      else if (l[i](x,y)) return false};
-    return false}
+      if (l[i](x,y) != 0) return l[i](x,y);
+    };
+    return 0}
 };
 
 var revOrder = (o) => ((x, y) => o(y, x));

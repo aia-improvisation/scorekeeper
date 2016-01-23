@@ -7,14 +7,14 @@ $(() => {
   
   Player.restore();
 
-  $(".playerNum.header").click(() => Player.refresh({num : "change"}));
-  $(".playerName.header").click(() => Player.refresh({name : "change"}));
+  $(".playerNum.header").click(() => Player.refresh(playerOrder.num));
+  $(".playerName.header").click(() => Player.refresh(playerOrder.name));
   $(".playerScore.header").click(() => Player
-    .refresh({eliminated: true, score: "change"}));
+    .refresh(playerOrder.score));
 
-  $(".nextRound").button().click(() => Player.round = Player.nextRound());
+  $("#nextRound").button().click(() => Player.round = Player.nextRound());
 
-  $(".roundNumber").editable("unsafe", function (){
+  $("#roundNumber").editable("unsafe", function (){
     this.input("text",
 	       function(val){
 		 if (Number(val) != NaN) {Player.round = Number(val)};
