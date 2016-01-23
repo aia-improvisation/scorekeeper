@@ -14,6 +14,9 @@ $(() => {
 
   $("#nextRound").button().click(() => Player.round = Player.nextRound());
 
+  $("#resetScores").button().click(() =>
+    $.each(Player.data.list, (i,p) => p.scoreList=[]));
+
   $("#roundNumber").editable("unsafe", function (){
     this.input("text",
 	       function(val){

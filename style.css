@@ -167,6 +167,10 @@ div.point.even{
 background-color:#000;
 }
 
+.playerLine {
+border-bottom: 1px #369 solid;
+}
+
 #playerList.waiting .playerLine:not(.selected) {
 color:#000;
 }
@@ -207,6 +211,13 @@ display: inline-block;
 body.edition_unsafe div.playerControl.header {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><rect x='6' y='0' width='4' height='16' style='fill:#008000'/><rect x='0' y='6' width='16' height='4' style='fill:#008000'/></svg>");
     cursor:pointer;
+}
+
+body.edition_safe #resetScores {
+    display: none;
+}
+body.edition_unsafe #resetScores {
+    font-size: 80%;
 }
 
 body.edition_unsafe div.playerControl:not(.header) {
