@@ -177,12 +177,12 @@ class Player {
 
   // init (re)creates the html supporting the display of the player
   init(){
+    var this_player = this;
     this.detach();
     if (!(this.$ instanceof jQuery)) {
       this.$ = $("<li>").addClass("playerLine").attr("player",this.id);
-      $("<div class='playerControl'>").appendTo(this.$).editable("unsafe", function(){
-	this.player().delete();
-      });
+      $("<div class='playerControl'>").appendTo(this.$)
+	.editable("unsafe", () => this.delete());
       $("<div class='playerStatus'>").appendTo(this.$);
       $("<div class='playerNum'>").appendTo(this.$).editable("unsafe", function(){
 	var player = this.player();
