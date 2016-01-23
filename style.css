@@ -224,7 +224,7 @@ cursor:pointer;
 }
 
 .playerLine.eliminated  .playerStatus {
-background-image: url("images/DeleteRed16.png");
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><polygon points='4,0 16,12 12,16 0,4' style='fill:#ff0000'/><polygon points='12,0 0,12 4,16 16,4' style='fill:#ff0000'/></svg>");
 }
 
 .edition_safe > #lock span:before {
