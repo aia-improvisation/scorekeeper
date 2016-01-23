@@ -20,20 +20,12 @@
 </head>
 <body>
 
-<div id="functionsListWrapper"></div>
-<div id="functionsList">
-	<button id="btn_edit" class="unsafe">Edit</button>
-	<button id="btn_selectPlayers">Select Players</button>
-	<button id="btn_attributeScore">Attribute score</button>
-	<button id="btn_eliminatePlayers">Eliminate Players</button>
-	<br />
-	<button id="btn_newGame" class="btn btn-danger" onclick="return confirm('are you sure you want to start a new game?')">New Game</button>
-</div>
-
+<div id="lock"></div>
 
 <div id="title">
   Maestro Impro™, Round n°<span class="roundNumber">1</span>
   <div class="nextRound">Next Round</div>
+  <div id="eliminatePlayers">Begin elimination</div>
 </div>
 
 <div id="timer">
@@ -41,12 +33,19 @@
 
 <ul id="playerList">
   <li>
+    <div class="playerControl header"></div>
     <div class="playerStatus header"></div>
     <div class="playerNum header">N°</div>
     <div class="playerName header">Name</div>
-    <div class="playerScore header">Score</div>
+    <div class="playerScore header">Score</div><div id="giveScore">give score</div>
   </li>
 </ul>
+
+<div id="dialogScore">
+<form>Score : <input id="newScore" type="text" size="1" autocomplete="off" ></form>
+</div>
+
+<div id="dialogError"></div>
 
 </body>
 </html>

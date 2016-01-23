@@ -8,10 +8,22 @@ font-size:300%;
 text-align:center;
 }
 
+#lock {
+font-size: 80%;
+}
+
 #title .nextRound{
-font-size: 50%;
-display: inline;
-cursor: pointer;
+font-size: 25%;
+height: 2em;
+display: inline-block;
+/* cursor: pointer; */
+}
+
+#title #eliminatePlayers{
+font-size: 25%;
+height: 2em;
+display: inline-block;
+/* cursor: pointer; */
 }
 
 
@@ -143,11 +155,11 @@ display: inline-block;
 display: inline;
 }
 
-div.odd{
-background-color:#FFF;
+div.point.odd{
+background-color:#00F;
 }
 
-div.even{
+div.point.even{
 background-color:#000;
 }
 
@@ -168,6 +180,11 @@ color:#DDD;
 display: none;
 }
 
+#giveScore {
+display: inline-block;
+font-size: 80%;
+}
+
 .playerStatus {
 width:16px;
 margin-right:20px;
@@ -176,25 +193,57 @@ min-height: 1em;
 display: inline-block;
 }
 
-.playerLine.selected > .playerStatus {
+.playerControl {
+width:16px;
+margin-right:20px;
+/* font-size:150%; */
+min-height: 1em;
+display: inline-block;
+}
+
+body.edition_unsafe div.playerControl.header {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><rect x='6' y='0' width='4' height='16' style='fill:#008000'/><rect x='0' y='6' width='16' height='4' style='fill:#008000'/></svg>");
+    cursor:pointer;
+}
+
+body.edition_unsafe div.playerControl:not(.header) {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><rect x='0' y='6' width='16' height='4' style='fill:#FF0000'/></svg>");
+    cursor:pointer;
+
+}
+
+.playerLine.selected:not(.eliminated) .playerStatus {
 background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><polygon points='0,0 0,16 14,8' style='fill:#008000'/></svg>");
-}
-.playerLine:not(.selected) > .playerStatus {
-background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'>
-<polygon points='0,0 4,0 4,16 0,16' style='fill:#d45500'/>
-<polygon points='8,0 12,0 12,16 8,16' style='fill:#d45500'/>
-</svg>");
+cursor:pointer;
 }
 
-/* .eliminated .point,.eliminated .noPoint{ */
-/* border-color:#DDD; */
+.playerLine:not(.selected):not(.eliminated) .playerStatus {
+background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='16px' height='16px' viewBox='0 0 16 16' enable-background='new 0 0 16 16' xml:space='preserve'><polygon points='0,0 4,0 4,16 0,16' style='fill:#d45500'/><polygon points='8,0 12,0 12,16 8,16' style='fill:#d45500'/></svg>");
+cursor:pointer;
+
+}
+
+.playerLine.eliminated  .playerStatus {
+background-image: url("images/DeleteRed16.png");
+}
+
+.edition_safe > #lock span:before {
+content: "safe";
+}
+
+.edition_unsafe > #lock span:before {
+content: "unsafe";
+}
+
+/* .edition_play > #eliminatePlayers:before { */
+/* content: "Eliminate players"; */
 /* } */
-/* .eliminated .point{ */
-/* background-color:#DDD; */
+
+/* .edition_eliminate > #eliminatePlayers:before { */
+/* content: "Stop elimination"; */
 /* } */
 
-
-/* scoreAttribution */
-#form_scoreAttribution .improScore{
-margin: 20px 80px;
-}
+/* /\* scoreAttribution *\/ */
+/* #form_scoreAttribution .improScore{ */
+/* margin: 20px 80px; */
+/* } */
