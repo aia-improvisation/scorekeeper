@@ -211,7 +211,7 @@ class Player {
   delete() {
     this.remove();
     var index = Player.data.list.indexOf(this);
-    if (index != -1) Player.data.list.pop(index);
+    if (index != -1) Player.data.list.splice(index, 1);
     Player.store();
     delete(this);
   };
