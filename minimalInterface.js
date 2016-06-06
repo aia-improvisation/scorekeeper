@@ -40,6 +40,21 @@ $(() => {
     new Player(0,"Player");
   })
 
+    $.extend($.ui.dialog.prototype.options, {
+      create: function() {
+        var $this = $(this);
+
+        // focus first button and bind enter to it
+        $this.parent().find('.ui-dialog-buttonpane button:first').focus();
+        $this.keypress(function(e) {
+          if( e.keyCode == $.ui.keyCode.ENTER ) {
+            $this.parent().find('.ui-dialog-buttonpane button:first').click();
+            return false;
+          }
+        });
+      }
+    });
+
   $("#dialogScore").dialog({
     autoOpen: false,
     height: 200,
