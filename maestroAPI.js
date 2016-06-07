@@ -43,6 +43,13 @@ $.deactivateEdition = function (mode) {
   $.activateEdition(mode, false);
 }
 
+$(() => {
+  $("#dialogInputFocusOut").dialog({
+    autoOpen: false,
+    width: 400,
+    modal: true,
+    title: "Change value"
+  })});
 
 // jquery extension to edit using inputs in place
 $.fn.extend({
@@ -53,15 +60,50 @@ $.fn.extend({
     // extra transformation, user provided
     if (tune) tune.call(this);
     this.replaceWith(input);
-    input.focus();
-    input.keydown(function(event) {
-      if (event.which == 13) {
-	$(this).replaceWith(that);
+    var stillopen = true;
+    var change = function(){
+      if (stillopen) {
+	input.replaceWith(that);
+	stillopen = false;
 	submit(input.val());
-      }else if (event.which == 27) {
-	$(this).replaceWith(that);
+      }
+    };
+    var restore = function(){
+      if (stillopen) {
+	input.replaceWith(that);
+	stillopen = false;
 	cancel();
       }
+    }
+    input.focus();
+    input.focusout(function(){
+      $("#dialogInputFocusOut").dialog("option", "buttons",{
+	  Change: function() {
+	    change();
+	    $("#dialogInputFocusOut").dialog( "close" );
+	  },
+	  Cancel: function() {
+	    $("#dialogInputFocusOut").dialog( "close" );
+	  }
+      });
+      $("#oldInputValue").text(that.text());
+      $("#newInputValue").text(input.val());
+      $("#dialogInputFocusOut").dialog("open");
+      $("#dialogInputFocusOut").on( "dialogclose", function( event, ui ) {
+        restore();
+      } );
+      $("#dialogInputFocusOut").keydown(function(event) {
+	if (event.which == 13) {
+	  change();
+	  $("#dialogInputFocusOut").dialog( "close" )
+      }	else if (event.which == 27) {
+	$("#dialogInputFocusOut").dialog( "close" )
+      }
+      });
+    });
+    input.keydown(function(event) {
+      if (event.which == 13) {change()}
+      else if (event.which == 27) {restore()}
     })
   }
 });
@@ -140,7 +182,7 @@ class Player {
     var point = 0;
     var currentBlock = undefined;
     var $score = this.$.find(".playerScore").html("");
-    this._score = this._score.filter(n => 
+    this._score = this._score.filter(n =>
       (0 < n) && (n <= maxScorePerPlay));
     $.each(this.scoreList, (i, score_i) => {
       for(var j = 0; j < score_i; j++){
@@ -314,7 +356,7 @@ Player.reset = function () {
   Player.store();
 };
 
-Player.nextRound = () => 
+Player.nextRound = () =>
   Player.data.list.filter(p => !p.eliminated).reduce((m, p) =>
     Math.min(m, p.nextRound ? p.nextRound() : Infinity), Infinity);
 

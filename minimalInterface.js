@@ -65,7 +65,7 @@ $(() => {
       Give: function(){
 	var n = Number($("#newScore").val());
 	if (n < 1 || n > maxScorePerPlay) {
-	  dialogError("Invalid Score");
+	  dialogError("Invalid Score : must be between 1 and 5");
 	} else {
 	  console.log(n)
 	  $.each(Player.selected(), (i, p) => p.scorePush(n));
