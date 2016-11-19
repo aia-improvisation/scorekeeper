@@ -77,6 +77,10 @@ $.fn.extend({
     }
     input.focus();
     input.focusout(function(){
+      if (input.val() == that.text()) {
+	change();
+	return
+      }
       $("#dialogInputFocusOut").dialog("option", "buttons",{
 	  Change: function() {
 	    change();
